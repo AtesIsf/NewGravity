@@ -1,20 +1,20 @@
 package main
 
 import (
-	src "newgravity/pkg/src"
+	src "newgravity/gravity/src"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 func main() {
-	src.SimInit()
+	cam := src.SimInit()
 	defer src.SimQuit()
 
 	for !rl.WindowShouldClose() {
 		// Update
-		src.Update()
+		src.Update(&cam)
 
 		// Draw
-		src.Draw()
+		src.Draw(cam)
 	}
 }

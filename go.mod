@@ -1,4 +1,4 @@
-module newgravity/pkg
+module newgravity/gravity
 
 go 1.21.0
 
