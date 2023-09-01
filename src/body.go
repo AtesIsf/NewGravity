@@ -37,7 +37,7 @@ func NewBody(mass float32, radius float32, color rl.Color, pos rl.Vector3, v rl.
 func (body *Body) Update(bodies []*Body, simSpeed float32) {
 	dTime := rl.GetFrameTime() * simSpeed
 	var distance rl.Vector3
-	var force float32
+	var force float32 = 0
 
 	for _, b := range bodies {
 		if body.Id == b.Id {
@@ -45,7 +45,7 @@ func (body *Body) Update(bodies []*Body, simSpeed float32) {
 		}
 
 		distance = rl.Vector3Multiply(rl.Vector3Subtract(body.Position, b.Position), -1)
-		force = 6.67 * float32(math.Pow10(-11)) * body.Mass * b.Mass / float32(math.Pow(float64(rl.Vector3Length(distance)), 2))
+		force += 6.67 * float32(math.Pow10(-11)) * body.Mass * b.Mass / float32(math.Pow(float64(rl.Vector3Length(distance)), 2))
 		body.Force = rl.Vector3Multiply(rl.Vector3Normalize(distance), force)
 	}
 

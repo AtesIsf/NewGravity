@@ -10,7 +10,7 @@ import (
 const (
 	WINDOW_WIDTH  int     = 980
 	WINDOW_HEIGHT int     = 640
-	START_POS     float32 = 20
+	START_POS     float32 = 32
 )
 
 var (
@@ -106,7 +106,7 @@ func SimInit() rl.Camera {
 	)
 
 	bodies = append(
-		bodies, NewBody(float32(math.Pow10(8)), 1, rl.DarkGreen, rl.NewVector3(0, 2, 16), rl.NewVector3(2, 0, 0)),
+		bodies, NewBody(float32(math.Pow10(8)), 1, rl.DarkGreen, rl.NewVector3(0, 2, 24), rl.NewVector3(1.25, 0, 0)),
 	)
 
 	return cam
@@ -142,10 +142,11 @@ func Draw(cam rl.Camera3D) {
 	rl.EndMode3D()
 
 	// UI
-	rl.DrawRectangle(0, 0, 250, 220, rl.NewColor(255, 255, 255, 25))
+	rl.DrawRectangle(0, 0, 320, 270, rl.NewColor(255, 255, 255, 25))
 	rl.DrawText(
 		fmt.Sprintf(
-			"Esc: Toggle Fullscreen\n1: Enable Mouse\n2: Disable Mouse\n"+
+			"Esc: Toggle Fullscreen\nR: Look Straight\nT: Return to Original Position\n"+
+				"1: Enable Mouse\n2: Disable Mouse\n"+
 				"3: Speed Down\n4: Speed Up\nSpace: Pause/Resume\nCurrent Speed: %.2fx", simSpeed,
 		),
 		10, 5, 20, rl.RayWhite,
