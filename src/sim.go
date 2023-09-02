@@ -3,6 +3,7 @@ package gravity
 import (
 	"fmt"
 	"math"
+	"sync"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -17,6 +18,7 @@ var (
 	bodies    []*Body
 	simSpeed  float32 = 1
 	pastSpeed float32 = 0
+	wg        sync.WaitGroup
 )
 
 func toggleFullScreen() {
@@ -124,8 +126,10 @@ func Update(cam *rl.Camera3D) {
 	rl.UpdateCamera(cam, rl.CameraFree)
 
 	for _, body := range bodies {
-		body.Update(bodies, simSpeed)
+		wg.Add(1)
+		go body.ConcurrentUpdate(bodies, simSpeed, &wg)
 	}
+	wg.Wait()
 }
 
 func Draw(cam rl.Camera3D) {
@@ -136,7 +140,7 @@ func Draw(cam rl.Camera3D) {
 	rl.ClearBackground(rl.Black)
 
 	for _, body := range bodies {
-		body.Draw()
+		go body.Draw()
 	}
 
 	rl.EndMode3D()

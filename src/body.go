@@ -2,6 +2,7 @@ package gravity
 
 import (
 	"math"
+	"sync"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -51,6 +52,11 @@ func (body *Body) Update(bodies []*Body, simSpeed float32) {
 
 	body.Velocity = rl.Vector3Add(body.Velocity, rl.Vector3Multiply(body.Force, 1/body.Mass*dTime))
 	body.Position = rl.Vector3Add(rl.Vector3Scale(body.Velocity, dTime), body.Position)
+}
+
+func (body *Body) ConcurrentUpdate(bodies []*Body, simSpeed float32, wg *sync.WaitGroup) {
+	defer wg.Done()
+	go body.Update(bodies, simSpeed)
 }
 
 func (body *Body) Draw() {
