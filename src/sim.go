@@ -140,7 +140,7 @@ func Draw(cam rl.Camera3D) {
 	rl.ClearBackground(rl.Black)
 
 	for _, body := range bodies {
-		go body.Draw()
+		body.Draw()
 	}
 
 	rl.EndMode3D()

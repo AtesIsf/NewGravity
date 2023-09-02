@@ -56,7 +56,7 @@ func (body *Body) Update(bodies []*Body, simSpeed float32) {
 
 func (body *Body) ConcurrentUpdate(bodies []*Body, simSpeed float32, wg *sync.WaitGroup) {
 	defer wg.Done()
-	go body.Update(bodies, simSpeed)
+	body.Update(bodies, simSpeed)
 }
 
 func (body *Body) Draw() {
